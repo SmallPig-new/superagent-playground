@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A single-file Hello World page, made by Super Agent.">
+<title>Hello, World! · Super Agent</title>
+<style>
+  :root {
+    --bg: #070b18;
+    --card: rgba(255, 255, 255, 0.045);
+    --line: rgba(255, 255, 255, 0.10);
+    --text: #eef2ff;
+    --muted: #a7b2d2;
+    --cyan: #5ee7ff;
+    --violet: #8b7bff;
+    --pink: #ff7ad9;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    overflow-x: hidden;
+    color: var(--text);
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(1100px 620px at 12% -12%, rgba(94, 231, 255, 0.16), transparent 62%),
+      radial-gradient(1000px 700px at 102% 112%, rgba(139, 123, 255, 0.20), transparent 58%),
+      radial-gradient(760px 480px at 55% 48%, rgba(255, 122, 217, 0.07), transparent 72%),
+      var(--bg);
+  }
+
+  /* faint blueprint grid */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 20%, transparent 100%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 42%, #000 20%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    padding: 56px 56px 44px;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    box-shadow:
+      0 30px 80px -20px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+      0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(94, 231, 255, 0.55), transparent 30%, transparent 70%, rgba(255, 122, 217, 0.45));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    padding: 7px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(36px, 10vw, 76px);
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+
+  .grad {
+    background: linear-gradient(100deg, var(--cyan) 0%, var(--violet) 48%, var(--pink) 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+  }
+
+  .cn {
+    margin: 16px 0 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #dce3ff;
+  }
+
+  .lead {
+    margin: 14px auto 0;
+    max-width: 520px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .chips span {
+    padding: 5px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #9aa6c9;
+    font-size: 12px;
+  }
+
+  .actions {
+    margin-top: 34px;
+  }
+
+  .hello-btn {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    padding: 13px 26px;
+    border-radius: 999px;
+    background: linear-gradient(100deg, #59d9ff, #8b7bff 55%, #ff7ad9);
+    background-size: 160% 100%;
+    color: #081020;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 12px 30px -10px rgba(120, 160, 255, 0.75);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-position 0.35s ease;
+  }
+
+  .hello-btn:hover {
+    transform: translateY(-2px);
+    background-position: 100% 0;
+    box-shadow: 0 16px 36px -10px rgba(150, 160, 255, 0.85);
+  }
+
+  .hello-btn:active { transform: translateY(0) scale(0.98); }
+
+  .hello-btn:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+  }
+
+  .count {
+    min-height: 18px;
+    margin: 14px 0 0;
+    font-size: 12.5px;
+    color: #7f8bb0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .count.show { opacity: 1; }
+
+  footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    text-align: center;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: rgba(150, 162, 198, 0.65);
+    pointer-events: none;
+  }
+
+  footer .heart { color: #ff7ad9; }
+
+  .float {
+    position: fixed;
+    z-index: 10;
+    font-size: 26px;
+    pointer-events: none;
+    user-select: none;
+    animation: floatUp 1.6s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    from { opacity: 1; transform: translate(-50%, 0) scale(0.7); }
+    to   { opacity: 0; transform: translate(-50%, -140px) scale(1.25); }
+  }
+
+  @media (max-width: 520px) {
+    .card { padding: 42px 26px 36px; border-radius: 22px; }
+    .cn { font-size: 19px; }
+    .lead { font-size: 13.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="badge"><span class="dot"></span>Super Agent · Playground</div>
+
+    <h1><span class="grad">Hello, World!</span></h1>
+    <p class="cn">你好，世界 👋</p>
+    <p class="lead">这是一个由 Super Agent 生成、可直接在浏览器打开的单文件页面。</p>
+
+    <div class="chips">
+      <span>单文件</span>
+      <span>零依赖</span>
+      <span>响应式</span>
+    </div>
+
+    <div class="actions">
+      <button class="hello-btn" id="hello" type="button">打个招呼 →</button>
+      <p class="count" id="count" aria-live="polite"></p>
+    </div>
+  </main>
+
+  <footer>Built with <span class="heart">♥</span> by DSH Super Agent</footer>
+
+  <script>
+    (function () {
+      var button = document.getElementById('hello');
+      var count = document.getElementById('count');
+      var greetings = ['Hello!', '你好！', 'Bonjour!', 'こんにちは！', 'Hola!'];
+      var times = 0;
+
+      button.addEventListener('click', function (event) {
+        times += 1;
+        button.textContent = 'Hello ×' + times;
+        count.textContent = '已经打过 ' + times + ' 次招呼 · ' + greetings[times % greetings.length];
+        count.classList.add('show');
+
+        for (var i = 0; i < 5; i += 1) {
+          var emoji = document.createElement('span');
+          emoji.className = 'float';
+          emoji.textContent = ['👋', '✨', '💫', '🫧'][i % 4];
+          emoji.style.left = (event.clientX + (Math.random() - 0.5) * 180) + 'px';
+          emoji.style.top = (event.clientY + (Math.random() - 0.5) * 40) + 'px';
+          emoji.style.animationDelay = (i * 40) + 'ms';
+          document.body.appendChild(emoji);
+          setTimeout(function (node) {
+            return function () { node.remove(); };
+          }(emoji), 2000);
+        }
+      });
+    }());
+  </script>
+</body>
+</html>
